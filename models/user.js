@@ -37,6 +37,20 @@ const User = mongoose.model(
       min: 12,
       max: 15
     },
+    favoriteLocation: {
+      category: {
+        type: String,
+        enum: ["Gym", "Cafe & Restaurant", "Home", "Work", "Shopping"]
+      },
+      icon: { type: String },
+      address: {
+        longitude: { type: String },
+        latitude: { type: String },
+        country: { type: String },
+        city: { type: String },
+        street: { type: String }
+      }
+    },
     creditCard: {
       type: {
         type: String,
@@ -82,7 +96,11 @@ function validateUser(user) {
       .required(),
     email: Joi.String().email(),
     wallet: Joi.Number().min(0),
-    address: Joi.String(),
+    address: Joi.object({
+      country: Joi.String().required(),
+      city: Joi.String().required(),
+      street: Joi.String().required()
+    }),
     dateOfBirth: Joi.Date(),
     phone: Joi.String()
       .min(12)
