@@ -9,12 +9,6 @@ const Car = mongoose.model(
     color: { type: String, required: true },
     isDisabled: { type: Boolean, required: true },
     isAccessed: { type: Boolean, required: true },
-    userId: {
-      type: mongoose.Types.ObjectId(),
-      required: function() {
-        return this.isAccessed;
-      }
-    },
     currentLocation: {
       longitude: { type: String, required: true },
       latitude: { type: String, required: true }
@@ -33,7 +27,6 @@ function validateCar(car) {
     color: Joi.String().required(),
     isDisabled: Joi.Boolean().required(),
     isAccessed: Joi.Boolean().required(),
-    userId: Joi.String(),
     currentLocation: Joi.object({
       longitude: Joi.String().required(),
       latitude: Joi.String().required()

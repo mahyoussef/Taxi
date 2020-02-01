@@ -16,6 +16,12 @@ const Ride = mongoose.model(
       latitude: { type: [String], required: true }
     },
     carId: { type: mongoose.Types.ObjectId(), required: true },
+    userId: {
+      type: mongoose.Types.ObjectId(),
+      required: true
+    },
+    rideTime: { type: Number, min: 1, required: true },
+    estimatedTime: { type: Number, min: 1, required: true },
     feedback: {
       body: { type: String, minlength: 10, maxlength: 255, required: true },
       rate: { type: Number, min: 0, max: 5, required: true },
@@ -38,6 +44,13 @@ function validateRide(ride) {
       latitude: Joi.array(Joi.String()).required()
     }),
     carId: Joi.String().required(),
+    userId: Joi.String().required(),
+    rideTime: Joi.Number()
+      .min(1)
+      .required(),
+    estimatedTime: Joi.Number()
+      .min(1)
+      .required(),
     feedback: Joi.object({
       body: Joi.String()
         .min(10)
