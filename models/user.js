@@ -4,24 +4,9 @@ const mongoose = require("mongoose");
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
-    username: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 9,
-      maxlength: 255
-    },
-    email: {
-      type: String,
-      required: true,
-      minlength: 15,
-      maxlength: 255
-    },
+    username: { type: String, required: true, minlength: 5, maxlength: 255 },
+    password: { type: String, required: true, minlength: 9, maxlength: 255 },
+    email: { type: String, required: true, minlength: 15, maxlength: 255 },
     wallet: {
       type: Number,
       required: true,
@@ -31,12 +16,7 @@ const User = mongoose.model(
     },
     address: { country: String, city: String, street: String },
     dateOfBirth: Date,
-    phone: {
-      type: String,
-      required: true,
-      min: 12,
-      max: 15
-    },
+    phone: { type: String, required: true, min: 12, max: 15 },
     favoriteLocation: {
       category: {
         type: String,
@@ -52,33 +32,26 @@ const User = mongoose.model(
       }
     },
     creditCard: {
-      type: {
-        type: String,
-        enum: ["Visa", "Master Card"],
-        required: true
-      },
+      type: { type: String, enum: ["Visa", "Master Card"], required: true },
       cardHolder: {
         type: String,
         required: true,
         minlength: 10,
         maxlength: 255
       },
-      cvv: {
-        type: Number,
-        required: true,
-        min: 3,
-        max: 3
-      },
-      creditCardNumber: {
-        type: String,
-        required: true,
-        min: 16,
-        max: 16
-      },
-      expirationDate: {
-        type: Date,
-        required: true
-      }
+      cvv: { type: Number, required: true, min: 3, max: 3 },
+      creditCardNumber: { type: String, required: true, min: 16, max: 16 },
+      expirationDate: { type: Date, required: true }
+    },
+    usedOffer: {
+      offerId: { type: mongoose.Types.ObjectId(), required: true },
+      offerCount: { type: Number, required: true }
+    },
+    usedPackage: {
+      packageId: { type: mongoose.Types.ObjectId(), require: true },
+      startingDate: { type: Date, default: Date.now(), required: true },
+      endingDate: { type: Date, required: true },
+      isFinished: { type: Boolean, require: true }
     },
     image: String
   })
@@ -121,6 +94,16 @@ function validateUser(user) {
         .max(16)
         .required(),
       expirationDate: Joi.Date().required()
+    }),
+    usedOffer: Joi.object({
+      offerId: Joi.String().required(),
+      offerCount: Joi.Number().required()
+    }),
+    usedPackage: Joi.object({
+      packageId: Joi.String().required(),
+      startingDate: Joi.Date().required(),
+      endingDate: Joi.Date().required(),
+      isFinished: Joi.Boolean().required()
     }),
     image: Joi.String()
   };

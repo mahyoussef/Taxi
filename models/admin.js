@@ -4,32 +4,12 @@ const mongoose = require("mongoose");
 const Admin = mongoose.model(
   "Admin",
   new mongoose.Schema({
-    username: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 9,
-      maxlength: 255
-    },
-    email: {
-      type: String,
-      required: true,
-      minlength: 15,
-      maxlength: 255
-    },
+    username: { type: String, required: true, minlength: 5, maxlength: 255 },
+    password: { type: String, required: true, minlength: 9, maxlength: 255 },
+    email: { type: String, required: true, minlength: 15, maxlength: 255 },
     address: { country: String, city: String, street: String },
     dateOfBirth: Date,
-    phone: {
-      type: String,
-      required: true,
-      min: 12,
-      max: 15
-    },
+    phone: { type: String, required: true, min: 12, max: 15 },
     image: String
   })
 );

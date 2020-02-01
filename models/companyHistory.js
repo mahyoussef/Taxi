@@ -4,35 +4,15 @@ const mongoose = require("mongoose");
 const CompanyHistory = mongoose.model(
   "CompanyHistory",
   new mongoose.Schema({
-    companyId: {
-      type: mongoose.Types.ObjectId(),
-      required: true
-    },
-    startingDate: {
-      type: Date,
-      required: true
-    },
-    endingDate: {
-      type: Date,
-      required: true
-    },
-    offerId: {
-      type: mongoose.Types.ObjectId(),
-      required: true
-    },
+    companyId: { type: mongoose.Types.ObjectId(), required: true },
+    startingDate: { type: Date, required: true },
+    endingDate: { type: Date, required: true },
+    offerId: { type: mongoose.Types.ObjectId(), required: true },
     feedback: {
-      adminId: {
-        type: mongoose.Types.ObjectId(),
-        required: true
-      },
-      body: {
-        type: String
-      }
+      adminId: { type: mongoose.Types.ObjectId(), required: true },
+      body: { type: String }
     },
-    moneyIncome: {
-      type: Number,
-      required: true
-    }
+    moneyIncome: { type: Number, required: true }
   })
 );
 
