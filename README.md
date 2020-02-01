@@ -1,2 +1,3 @@
 # Taxi
-![](images/taxi.png)
+
+![logo](taxi-logo.png)
