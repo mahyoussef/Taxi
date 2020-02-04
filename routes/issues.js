@@ -5,12 +5,14 @@ const router = express.Router();
 // Getting all issues
 router.get("/", issueController.getAllIssues);
 
+// Creating issue
 /*
-// This function does POST request for creating an issue ...
+    The functions is here 
 */
 
+// Updating issue with required ID
 /*
-// This function does PUT request for updating an issue ...
+    The functions is here
 */
 
 // Deletes single issue object with required ID

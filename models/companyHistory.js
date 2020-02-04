@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const CompanyHistory = mongoose.model(
   "CompanyHistory",
   new mongoose.Schema({
-    companyId: { type: mongoose.Types.ObjectId(), required: true },
+    companyId: {
+      type: mongoose.Types.ObjectId(),
+      ref: "Company",
+      required: true
+    },
     startingDate: { type: Date, required: true },
     endingDate: { type: Date, required: true },
     offerId: { type: mongoose.Types.ObjectId(), required: true },

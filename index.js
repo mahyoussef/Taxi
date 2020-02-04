@@ -16,5 +16,5 @@ app.use(express.json());
 app.use("/api/admins", admins);
 app.use("/api/issues", issues);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+//const port = process.env.PORT || 3000;
+//app.listen(port, () => console.log(`Listening on port ${port}...`));
