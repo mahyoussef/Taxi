@@ -5,15 +5,15 @@ const CompanyHistory = mongoose.model(
   "CompanyHistory",
   new mongoose.Schema({
     companyId: {
-      type: mongoose.Types.ObjectId(),
+      type: mongoose.Types.ObjectId,
       ref: "Company",
       required: true
     },
     startingDate: { type: Date, required: true },
     endingDate: { type: Date, required: true },
-    offerId: { type: mongoose.Types.ObjectId(), required: true },
+    offerId: { type: mongoose.Types.ObjectId, required: true },
     feedback: {
-      adminId: { type: mongoose.Types.ObjectId(), required: true },
+      adminId: { type: mongoose.Types.ObjectId, required: true },
       body: { type: String }
     },
     moneyIncome: { type: Number, required: true }

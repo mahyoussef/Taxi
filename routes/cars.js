@@ -12,7 +12,7 @@ router.post("/", carController.createCar);
 router.put("/:id", carController.updateCar);
 
 // Deleting company with required ID
-router.delete("/:id", carController.deleteCars);
+router.delete("/:id", carController.deleteCar);
 
 // Getting company with required ID
 router.get("/:id", carController.getCar);

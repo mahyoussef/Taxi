@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Ride = mongoose.model(
   "Ride",
   new mongoose.Schema({
-    userId: { type: mongoose.Types.ObjectId(), required: true },
+    userId: { type: mongoose.Types.ObjectId, required: true },
     date: { type: Date, default: Date.now, required: true },
     startLocation: { type: String, required: true },
     endLocation: { type: String, required: true },
@@ -15,9 +15,9 @@ const Ride = mongoose.model(
       longitude: { type: [String], required: true },
       latitude: { type: [String], required: true }
     },
-    carId: { type: mongoose.Types.ObjectId(), required: true },
+    carId: { type: mongoose.Types.ObjectId, required: true },
     userId: {
-      type: mongoose.Types.ObjectId(),
+      type: mongoose.Types.ObjectId,
       required: true
     },
     rideTime: { type: Number, min: 1, required: true },

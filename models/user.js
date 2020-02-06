@@ -44,11 +44,11 @@ const User = mongoose.model(
       expirationDate: { type: Date, required: true }
     },
     usedOffer: {
-      offerId: { type: mongoose.Types.ObjectId(), required: true },
+      offerId: { type: mongoose.Types.ObjectId, required: true },
       offerCount: { type: Number, required: true }
     },
     usedPackage: {
-      packageId: { type: mongoose.Types.ObjectId(), require: true },
+      packageId: { type: mongoose.Types.ObjectId, require: true },
       startingDate: { type: Date, default: Date.now(), required: true },
       endingDate: { type: Date, required: true },
       isFinished: { type: Boolean, require: true }
