@@ -61,7 +61,7 @@ exports.getCompany = async (req, res, next) => {
   const company = await Company.findById(req.params._id);
 
   if (!company)
-    return res.status(404).send("The admin with the given ID was not found.");
+    return res.status(404).send("The company with the given ID was not found.");
 
   res.send(company);
 };
