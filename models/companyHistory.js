@@ -16,7 +16,7 @@ const CompanyHistory = mongoose.model(
       adminId: { type: mongoose.Types.ObjectId, required: true },
       body: { type: String }
     },
-    moneyIncome: { type: Number, required: true }
+    moneyIncome: { type: Number, min: 0, required: true }
   })
 );
 
