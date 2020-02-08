@@ -17,23 +17,23 @@ const Car = mongoose.model(
 );
 
 function validateCar(car) {
-  const schema = {
-    model: Joi.String()
+  const schema = Joi.object({
+    model: Joi.string()
       .min(3)
       .required(),
-    type: Joi.String()
+    type: Joi.string()
       .min(3)
       .required(),
-    color: Joi.String().required(),
-    isDisabled: Joi.Boolean().required(),
-    isAccessed: Joi.Boolean().required(),
+    color: Joi.string().required(),
+    isDisabled: Joi.boolean().required(),
+    isAccessed: Joi.boolean().required(),
     currentLocation: Joi.object({
-      longitude: Joi.String().required(),
-      latitude: Joi.String().required()
+      longitude: Joi.string().required(),
+      latitude: Joi.string().required()
     })
-  };
+  });
 
-  return Joi.validate(car, schema);
+  return schema.validate(car);
 }
 
 exports.Car = Car;

@@ -3,18 +3,23 @@ const express = require("express");
 const router = express.Router();
 
 // Getting all admins
+/*.....[Tested Successfully].......*/
 router.get("/", companyHistoryController.getAllCompaniesHistory);
 
 // Creating new companyHistory
+/*.....[Tested Successfully].......*/
 router.post("/", companyHistoryController.createCompanyHistory);
 
 // Updating admin with required ID
-router.put("/:id", companyHistoryController.updateCompanyHistory);
+/*.....[Tested Successfully].......*/
+router.put("/:_id", companyHistoryController.updateCompanyHistory);
 
 // Deleting company with required ID
-router.delete("/:id", companyHistoryController.deleteCompanyHistory);
+/*.....[Tested Successfully].......*/
+router.delete("/:_id", companyHistoryController.deleteCompanyHistory);
 
 // Getting admin with required ID
-router.get("/:id", companyHistoryController.getCompanyHistory);
+/*.....[Tested Successfully].......*/
+router.get("/:_id", companyHistoryController.getCompanyHistory);
 
 module.exports = router;

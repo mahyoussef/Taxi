@@ -7,7 +7,8 @@ const Issue = mongoose.model(
     userId: { type: mongoose.Types.ObjectId, required: true },
     label: {
       type: String,
-      enum: ["Red", "Yellow", "Green", "Gray"],
+      enum: ["Red", "Yellow", "Green"],
+      default: "Gray",
       required: true
     },
     date: {
@@ -15,31 +16,41 @@ const Issue = mongoose.model(
       default: Date.now()
     },
     title: { type: String, minlength: 5, maxlength: 255, required: true },
+    body: { type: String, required: true, minlength: 10, maxlength: 255 },
     replies: {
-      adminId: { type: mongoose.Types.ObjectId, required: true },
-      body: { type: String, required: true, minlength: 10, maxlength: 255 }
+      type: {
+        adminId: { type: mongoose.Types.ObjectId, required: true },
+        body: { type: String, required: true, minlength: 10, maxlength: 255 }
+      },
+      default: "There's no replies",
+      required: false
     }
   })
 );
 
 function validateIssue(issue) {
-  const schema = {
-    userId: Jpi.String().required(),
-    label: Joi.String().required(),
-    title: Joi.String()
+  const schema = Joi.object({
+    userId: Joi.string().required(),
+    label: Joi.string().required(),
+    title: Joi.string()
       .min(5)
       .max(255)
       .required(),
-    date: Joi.Date(),
+    body: Joi.string()
+      .min(10)
+      .max(255)
+      .required(),
+    date: Joi.date(),
     replies: Joi.object({
-      adminId: Joi.String().required(),
-      body: Joi.String()
+      adminId: Joi.string().required(),
+      body: Joi.string()
         .min(10)
         .max(255)
         .required()
-    })
-  };
-  return Joi.validate(issue, schema);
+    }).allow(null)
+  });
+
+  return schema.validate(issue);
 }
 
 exports.Issue = Issue;

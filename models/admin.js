@@ -20,26 +20,28 @@ const Admin = mongoose.model(
 );
 
 function validateAdmin(admin) {
-  const schema = {
-    username: Joi.String()
+  const schema = Joi.object({
+    username: Joi.string()
       .min(5)
       .max(255)
       .required(),
-    password: Joi.String()
+    password: Joi.string()
       .min(10)
       .max(255)
       .required()
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/),
-    email: Joi.String().email(),
-    address: Joi.String(),
-    dateOfBirth: Joi.Date(),
-    phone: Joi.String()
-      .min(12)
+      .regex(
+        /^(?:(?=.*?[A-Z])(?:(?=.*?[0-9])(?=.*?[-!@#$%^&*()_[\]{},.<>+=])|(?=.*?[a-z])(?:(?=.*?[0-9])|(?=.*?[-!@#$%^&*()_[\]{},.<>+=])))|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-!@#$%^&*()_[\]{},.<>+=]))[A-Za-z0-9!@#$%^&*()_[\]{},.<>+=-]{7,50}$/
+      ),
+    email: Joi.string().email(),
+    address: Joi.object(),
+    dateOfBirth: Joi.date(),
+    phone: Joi.string()
+      .min(11)
       .max(15)
       .required(),
-    image: Joi.String()
-  };
-  return Joi.validate(admin, schema);
+    image: Joi.string().allow(null)
+  });
+  return schema.validate(admin);
 }
 
 exports.Admin = Admin;

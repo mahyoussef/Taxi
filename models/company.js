@@ -17,23 +17,25 @@ const Company = mongoose.model(
 );
 
 function validateCompany(company) {
-  const schema = {
-    name: Joi.String()
+  const schema = Joi.object({
+    name: Joi.string()
       .min(5)
       .required(),
-    numberOfEmployees: Joi.Number().required(),
-    email: Joi.String().email(),
-    phone: Joi.String()
-      .min(12)
+    numberOfEmployees: Joi.number()
+      .min(0)
+      .required(),
+    email: Joi.string().email(),
+    phone: Joi.string()
+      .min(11)
       .max(15)
       .required(),
     address: Joi.object({
-      country: Joi.String().required(),
-      city: Joi.String().required(),
-      street: Joi.String().required()
+      country: Joi.string().required(),
+      city: Joi.string().required(),
+      street: Joi.string().required()
     })
-  };
-  return Joi.validate(company, schema);
+  });
+  return schema.validate(company);
 }
 
 exports.Company = Company;

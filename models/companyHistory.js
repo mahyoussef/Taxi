@@ -11,31 +11,36 @@ const CompanyHistory = mongoose.model(
     },
     startingDate: { type: Date, required: true },
     endingDate: { type: Date, required: true },
-    offerId: { type: mongoose.Types.ObjectId, required: true },
+    offerId: { type: mongoose.Types.ObjectId },
     feedback: {
-      adminId: { type: mongoose.Types.ObjectId, required: true },
-      body: { type: String }
+      type: {
+        adminId: { type: mongoose.Types.ObjectId, required: true },
+        body: { type: String, required: true }
+      },
+      required: false
     },
     moneyIncome: { type: Number, min: 0, required: true }
   })
 );
 
 function validateCompanyHistory(companyHistory) {
-  const schema = {
-    companyId: Joi.String().required(),
-    startingDate: Joi.Date().required(),
-    endingDate: Joi.Date().required(),
-    offerId: Joi.String().required(),
+  const schema = Joi.object({
+    companyId: Joi.string().required(),
+    startingDate: Joi.date().required(),
+    endingDate: Joi.date().required(),
+    offerId: Joi.string().allow(null),
     feedback: Joi.object({
-      adminId: Joi.String().required(),
-      body: Joi.String()
+      adminId: Joi.string().required(),
+      body: Joi.string()
         .min(10)
         .max(255)
         .required()
-    }),
-    moneyIncome: Joi.Number().required()
-  };
-  return Joi.validate(companyHistory, schema);
+    }).allow(null),
+    moneyIncome: Joi.number()
+      .min(0)
+      .required()
+  });
+  return schema.validate(companyHistory);
 }
 
 exports.CompanyHistory = CompanyHistory;

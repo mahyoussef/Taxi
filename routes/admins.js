@@ -4,16 +4,19 @@ const express = require("express");
 const router = express.Router();
 
 // Getting all admins
+/*.....[Tested Successfully].......*/
 router.get("/", adminController.getAllAdmins);
 
 // Updating admin with required ID
-router.put("/:id", adminController.updateAdmin);
+/*.....[Tested Successfully].......*/
+router.put("/:_id", adminController.updateAdmin);
 
 /*
 // Deleting admin with required ID
 */
 
 // Getting admin with required ID
-router.get("/:id", adminController.getAdmin);
+/*.....[Tested Successfully].......*/
+router.get("/:_id", adminController.getAdmin);
 
 module.exports = router;

@@ -4,8 +4,8 @@ const { CompanyHistory, validate } = require("../models/companyHistory");
 exports.getAllCompaniesHistory = async (req, res, next) => {
   CompanyHistory.find()
     .populate({
-      path: "CompanyID",
-      select: "name -_id"
+      path: "companyId",
+      select: "name _id"
     })
     .exec(function(err, companyHistory) {
       if (!err) res.send(companyHistory);
@@ -36,7 +36,7 @@ exports.updateCompanyHistory = async (req, res, next) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const companyHistory = await CompanyHistory.findByIdAndUpdate(
-    req.body._id,
+    { _id: req.params._id },
     {
       startingDate: req.body.startingDate,
       endingDate: req.body.endingDate,
@@ -44,21 +44,25 @@ exports.updateCompanyHistory = async (req, res, next) => {
       feedback: req.body.feedback,
       moneyIncome: req.body.moneyIncome
     },
-    { new: true }
+    { new: true, useFindAndModify: false }
   );
 
   if (!companyHistory)
-    return res.status(404).send("The company with the given ID was not found.");
+    return res
+      .status(404)
+      .send("The company history with the given ID was not found.");
 
   res.send(companyHistory);
 };
 
 // Deleting company with required ID
 exports.deleteCompanyHistory = async (req, res, next) => {
-  const companyHistory = await CompanyHistory.findByIdAndRemove(req.body._id);
+  const companyHistory = await CompanyHistory.findByIdAndRemove(req.params._id);
 
   if (!companyHistory)
-    return res.status(404).send("The company with the given ID was not found.");
+    return res
+      .status(404)
+      .send("The company history with the given ID was not found.");
 
   res.send(companyHistory);
 };
@@ -68,7 +72,9 @@ exports.getCompanyHistory = async (req, res, next) => {
   const companyHistory = await CompanyHistory.findById(req.params._id);
 
   if (!companyHistory)
-    return res.status(404).send("The admin with the given ID was not found.");
+    return res
+      .status(404)
+      .send("The company history with the given ID was not found.");
 
   res.send(companyHistory);
 };

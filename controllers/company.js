@@ -28,8 +28,8 @@ exports.updateCompany = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const company = await Company.findByIdAndUpdate(
-    req.body._id,
+  const company = await Company.findOneAndUpdate(
+    { _id: req.params._id },
     {
       name: req.body.name,
       numberOfEmployees: req.body.numberOfEmployees,
@@ -37,7 +37,7 @@ exports.updateCompany = async (req, res, next) => {
       phone: req.body.phone,
       address: req.body.address
     },
-    { new: true }
+    { new: true, useFindAndModify: false }
   );
 
   if (!company)
@@ -48,7 +48,7 @@ exports.updateCompany = async (req, res, next) => {
 
 // Deleting company with required ID
 exports.deleteCompany = async (req, res, next) => {
-  const company = await Company.findByIdAndRemove(req.body._id);
+  const company = await Company.findByIdAndRemove(req.params._id);
 
   if (!company)
     return res.status(404).send("The company with the given ID was not found.");

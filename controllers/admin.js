@@ -1,8 +1,10 @@
 const { Admin, validate } = require("../models/admin");
+const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
 
 // Getting all admins
 exports.getAllAdmins = async (req, res, next) => {
-  const admins = await Admin.find().sort("username");
+  const admins = await Admin.find().sort({ username: "asc" });
   res.send(admins);
 };
 
@@ -15,18 +17,20 @@ exports.updateAdmin = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const admin = await Admin.findByIdAndUpdate(
-    req.body._id,
+  const admin = await Admin.findOneAndUpdate(
+    { _id: req.params._id },
     {
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      dateOfBirth: req.body.dateOfBirth,
-      phone: req.body.phone,
-      address: req.body.address,
-      image: req.body.image
+      $set: {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        dateOfBirth: req.body.dateOfBirth,
+        phone: req.body.phone,
+        address: req.body.address,
+        image: req.body.image
+      }
     },
-    { new: true }
+    { new: true, useFindAndModify: false }
   );
 
   if (!admin)
