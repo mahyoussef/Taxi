@@ -1,4 +1,5 @@
 const { Car, validate } = require("../models/car");
+const _ = require("lodash");
 
 // Getting all companies
 exports.getAllCars = async (req, res, next) => {
@@ -11,14 +12,16 @@ exports.createCar = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let car = new Car({
-    model: req.body.model,
-    type: req.body.type,
-    color: req.body.color,
-    isDisabled: req.body.isDisabled,
-    isAccessed: req.body.isAccessed,
-    currentLocation: req.body.currentLocation
-  });
+  let car = new Car(
+    _.pick(req.body, [
+      "model",
+      "type",
+      "color",
+      "isDisabled",
+      "isAccessed",
+      "currentLocation"
+    ])
+  );
   car = await car.save();
 
   res.send(car);
@@ -32,12 +35,14 @@ exports.updateCar = async (req, res, next) => {
   const car = await Car.findOneAndUpdate(
     { _id: req.params._id },
     {
-      model: req.body.model,
-      type: req.body.type,
-      color: req.body.color,
-      isDisabled: req.body.isDisabled,
-      isAccessed: req.body.isAccessed,
-      currentLocation: req.body.currentLocation
+      $set: _.pick(req.body, [
+        "model",
+        "type",
+        "color",
+        "isDisabled",
+        "isAccessed",
+        "currentLocation"
+      ])
     },
     { new: true, useFindAndModify: false }
   );

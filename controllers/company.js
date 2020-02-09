@@ -1,4 +1,5 @@
 const { Company, validate } = require("../models/company");
+const _ = require("lodash");
 
 // Getting all companies
 exports.getAllCompanies = async (req, res, next) => {
@@ -11,13 +12,10 @@ exports.createCompany = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let company = new Company({
-    name: req.body.name,
-    numberOfEmployees: req.body.numberOfEmployees,
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address
-  });
+  let company = new Company(
+    _.pick(req.body, ["name", "numberOfEmployees", "email", "phone", "address"])
+  );
+
   company = await company.save();
 
   res.send(company);
@@ -31,11 +29,13 @@ exports.updateCompany = async (req, res, next) => {
   const company = await Company.findOneAndUpdate(
     { _id: req.params._id },
     {
-      name: req.body.name,
-      numberOfEmployees: req.body.numberOfEmployees,
-      email: req.body.email,
-      phone: req.body.phone,
-      address: req.body.address
+      $set: _.pick(req.body, [
+        "name",
+        "numberOfEmployees",
+        "email",
+        "phone",
+        "address"
+      ])
     },
     { new: true, useFindAndModify: false }
   );

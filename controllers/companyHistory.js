@@ -1,4 +1,5 @@
 const { CompanyHistory, validate } = require("../models/companyHistory");
+const _ = require("lodash");
 
 // Getting all companies
 exports.getAllCompaniesHistory = async (req, res, next) => {
@@ -17,14 +18,16 @@ exports.createCompanyHistory = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let companyHistory = new CompanyHistory({
-    companyId: req.body.companyId,
-    startingDate: req.body.startingDate,
-    endingDate: req.body.endingDate,
-    offerId: req.body.offerId,
-    feedback: req.body.feedback,
-    moneyIncome: req.body.moneyIncome
-  });
+  let companyHistory = new CompanyHistory(
+    _.pick(req.body, [
+      "companyId",
+      "startingDate",
+      "endingDate",
+      "offerId",
+      "feedback",
+      "moneyIncome"
+    ])
+  );
   companyHistory = await companyHistory.save();
 
   res.send(companyHistory);
@@ -38,11 +41,14 @@ exports.updateCompanyHistory = async (req, res, next) => {
   const companyHistory = await CompanyHistory.findByIdAndUpdate(
     { _id: req.params._id },
     {
-      startingDate: req.body.startingDate,
-      endingDate: req.body.endingDate,
-      offerId: req.body.offerId,
-      feedback: req.body.feedback,
-      moneyIncome: req.body.moneyIncome
+      $set: _.pick(req.body, [
+        "companyId",
+        "startingDate",
+        "endingDate",
+        "offerId",
+        "feedback",
+        "moneyIncome"
+      ])
     },
     { new: true, useFindAndModify: false }
   );
