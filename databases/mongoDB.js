@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
+const config = require("config");
 
 exports.connectMongoDB = async () => {
+  const db = config.get("db");
   mongoose
-    .connect("mongodb://localhost/taxiData", {
+    .connect(config.get("db"), {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-    .then(() => console.log("Connected to mongodb..."))
-    .catch(err => console.error("Cannot connect to mongodb...", err));
+    .then(() => console.log(`Connected to ${db}...`))
+    .catch(err => console.error(`Cannot connect to ${db}...`, err));
 };

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Getting all admins
 /*.....[Tested Successfully].......*/
-router.get("/", auth, adminController.getAllAdmins);
+router.get("/", adminController.getAllAdmins);
 
 // Creating a new admin
 /*.....[Tested Successfully].......*/
